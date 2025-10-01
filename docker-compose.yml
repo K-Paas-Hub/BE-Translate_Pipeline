@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  translate-api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - HOST=0.0.0.0
+      - ENVIRONMENT=development
+      - DEBUG=True
+    volumes:
+      - .:/app
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    restart: unless-stopped
+
+  # 데이터베이스가 필요한 경우 (PostgreSQL 예시)
+  # postgres:
+  #   image: postgres:15
+  #   environment:
+  #     POSTGRES_DB: translate_pipeline
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: password
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+
+# volumes:
+#   postgres_data:
